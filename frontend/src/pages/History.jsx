@@ -64,9 +64,9 @@ function History() {
                               
                               return (
                                   <div key={mealCat} className="space-y-2">
-                                      <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 pl-2">{mealCat}</h3>
+                                      <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-300 pl-2">{mealCat}</h3>
                                       {foodsInCat.map((food, idx) => (
-                                          <div key={idx} className="flex items-center justify-between py-2 text-sm bg-zinc-50 dark:bg-[#121214] px-4 rounded border border-zinc-100 dark:border-zinc-800/50">
+                                          <div key={idx} className="flex items-center justify-between py-2 text-sm glass px-4 rounded border border-zinc-100 dark:border-zinc-800/50">
                                               <div className="font-bold">
                                                   {food.name} <span className="text-secondary ml-2 font-normal">({food.quantity})</span>
                                               </div>
@@ -88,3 +88,4 @@ function History() {
 }
 
 export default History;
+

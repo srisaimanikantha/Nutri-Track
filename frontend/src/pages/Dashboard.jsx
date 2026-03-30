@@ -68,7 +68,7 @@ function Dashboard() {
            <div className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-none overflow-hidden">
                <motion.div 
                    initial={{ width: 0 }} animate={{ width: `${caloriePercent}%` }}
-                   className={`h-full ${caloriePercent >= 100 ? 'bg-black dark:bg-white' : 'bg-black dark:bg-white'}`}
+                   className={`h-full ${caloriePercent >= 100 ? 'bg-black dark:bg-transparent' : 'bg-black dark:bg-transparent'}`}
                />
            </div>
            <p className="text-xs text-secondary mt-4 font-medium uppercase tracking-widest">
@@ -85,7 +85,7 @@ function Dashboard() {
            <div className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-none overflow-hidden">
                <motion.div 
                    initial={{ width: 0 }} animate={{ width: `${proteinPercent}%` }}
-                   className="h-full bg-black dark:bg-white"
+                   className="h-full bg-black dark:bg-transparent"
                />
            </div>
            <p className="text-xs text-secondary mt-4 font-medium uppercase tracking-widest">
@@ -99,3 +99,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+

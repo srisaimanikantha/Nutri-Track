@@ -23,7 +23,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-white dark:bg-[#09090b]">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-transparent">
       <motion.div 
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -31,10 +31,10 @@ function Login() {
         className="max-w-sm w-full text-center space-y-12"
       >
         <div className="space-y-4">
-          <h1 className="text-4xl font-extrabold tracking-[0.2em] uppercase text-black dark:text-white">
+          <h1 className="text-4xl font-extrabold tracking-[0.2em] uppercase text-white">
             Nutri<span className="text-zinc-400">Track</span>
           </h1>
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm tracking-widest uppercase">System Authentication</p>
+          <p className="text-zinc-300 dark:text-zinc-400 text-sm tracking-widest uppercase">System Authentication</p>
         </div>
 
         <button 
@@ -55,3 +55,4 @@ function Login() {
 }
 
 export default Login;
+

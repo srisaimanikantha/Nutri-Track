@@ -19,7 +19,7 @@ function Navbar() {
       return (
           <button 
               onClick={() => navigate(to)} 
-              className={`text-sm font-semibold tracking-widest uppercase px-3 py-1.5 transition-colors ${active ? 'text-black dark:text-white border-b-2 border-black dark:border-white' : 'text-zinc-500 hover:text-black dark:hover:text-white border-b-2 border-transparent'}`}
+              className={`text-sm font-semibold tracking-widest uppercase px-3 py-1.5 transition-colors ${active ? 'text-white border-b-2 border-black dark:border-white' : 'text-zinc-300 hover:text-black dark:hover:text-white border-b-2 border-transparent'}`}
           >
               {label}
           </button>
@@ -27,7 +27,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-white dark:bg-[#09090b] border-b border-zinc-200 dark:border-zinc-800">
+    <nav className="fixed w-full top-0 z-50 bg-transparent border-b border-zinc-200 dark:border-zinc-800">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 cursor-pointer flex items-center" onClick={() => navigate('/dashboard')}>
@@ -57,7 +57,7 @@ function Navbar() {
                       {currentUser.photoURL && <img src={currentUser.photoURL} alt="User" />}
                   </div>
                 </button>
-                <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-widest text-zinc-500 hover:text-black dark:hover:text-white transition hidden sm:block">
+                <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-widest text-zinc-300 hover:text-black dark:hover:text-white transition hidden sm:block">
                   Exit
                 </button>
               </div>
@@ -70,3 +70,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

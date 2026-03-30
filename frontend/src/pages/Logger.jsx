@@ -73,7 +73,7 @@ function Logger() {
         
         <div className="w-full text-left py-4">
             <label className="block text-xs font-bold tracking-widest uppercase mb-2">Meal Type Slot</label>
-            <select value={mealType} onChange={(e) => setMealType(e.target.value)} className="w-full bg-zinc-50 dark:bg-[#121214] border border-zinc-200 dark:border-zinc-800 rounded-md p-4 text-xs font-bold tracking-widest uppercase outline-none focus:border-zinc-400 transition-colors">
+            <select value={mealType} onChange={(e) => setMealType(e.target.value)} className="w-full glass border border-zinc-200 dark:border-zinc-800 rounded-md p-4 text-xs font-bold tracking-widest uppercase outline-none focus:border-zinc-400 transition-colors">
                 <option value="breakfast">Breakfast</option>
                 <option value="lunch">Lunch</option>
                 <option value="dinner">Dinner</option>
@@ -132,3 +132,4 @@ function Logger() {
 }
 
 export default Logger;
+
