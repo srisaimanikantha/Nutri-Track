@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import Webcam from 'react-webcam';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -12,6 +13,23 @@ function Logger() {
   const [loading, setLoading] = useState(false);
   const [scannedItems, setScannedItems] = useState(null);
   const [mealType, setMealType] = useState('lunch');
+  const [showCamera, setShowCamera] = useState(false);
+  const webcamRef = useRef(null);
+
+  const captureScreenshot = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    if (imageSrc) {
+        fetch(imageSrc)
+          .then(res => res.blob())
+          .then(blob => {
+            const file = new File([blob], "camera_capture.jpg", { type: "image/jpeg" });
+            setImageFiles(file);
+            setPreview(URL.createObjectURL(file));
+            setShowCamera(false);
+            setScannedItems(null);
+          });
+    }
+  }, [webcamRef]);
 
   const d = new Date();
   const todayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -82,15 +100,14 @@ function Logger() {
             </select>
         </div>
 
-        {!preview && (
+        {!preview && !showCamera && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                <label className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16">
+                <button onClick={() => setShowCamera(true)} className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16 w-full">
                     <span className="text-4xl drop-shadow-md">📸</span>
                     <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-md">Take Photo</span>
-                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
-                </label>
+                </button>
                 
-                <label className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16">
+                <label className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16 w-full">
                     <span className="text-4xl drop-shadow-md">📁</span>
                     <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-md">Upload Image</span>
                     <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
@@ -137,6 +154,35 @@ function Logger() {
             </motion.div>
         )}
       </motion.div>
+
+      {/* Live Camera Interface */}
+      {showCamera && (
+          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-4">
+              <div className="w-full max-w-lg aspect-video rounded-2xl overflow-hidden glass border-white/20 relative shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                  <Webcam
+                      audio={false}
+                      ref={webcamRef}
+                      screenshotFormat="image/jpeg"
+                      videoConstraints={{ facingMode: "environment" }}
+                      className="w-full h-full object-cover"
+                  />
+                  
+                  {/* Scope targeting UI crosshair */}
+                  <div className="absolute inset-0 border-[2px] border-white/20 m-10 rounded-xl pointer-events-none">
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/40 text-[10px] tracking-widest uppercase font-bold text-center">
+                         Center Food Here
+                     </div>
+                  </div>
+              </div>
+              
+              <div className="mt-8 flex gap-4 w-full max-w-lg justify-between">
+                  <button onClick={() => setShowCamera(false)} className="px-6 py-4 glass-button w-1/3 uppercase tracking-widest text-[10px]">Cancel</button>
+                  <button onClick={captureScreenshot} className="px-8 py-4 glass-button-primary flex-1 uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)]">
+                     📸 Snap Meal
+                  </button>
+              </div>
+          </div>
+      )}
     </div>
   );
 }
