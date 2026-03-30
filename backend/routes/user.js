@@ -36,7 +36,7 @@ function calculateMetrics(age, gender, heightCM, weightKG, goal) {
 // Handles the onboarding setup wizard metrics setup
 router.put('/onboard', async (req, res) => {
     try {
-        const { uid, gender, age, heightCM, weightKG, goal } = req.body;
+        const { uid, gender, age, heightCM, weightKG, targetWeightKG, goal } = req.body;
         if (!uid) return res.status(400).json({ error: 'Missing UID' });
 
         const metrics = calculateMetrics(age, gender, heightCM, weightKG, goal);
@@ -48,6 +48,7 @@ router.put('/onboard', async (req, res) => {
                 age,
                 heightCM,
                 weightKG,
+                targetWeightKG,
                 goal,
                 bmi: metrics.bmi,
                 targetCalories: metrics.targetCalories,

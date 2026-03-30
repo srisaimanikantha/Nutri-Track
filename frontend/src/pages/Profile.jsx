@@ -19,6 +19,7 @@ function Profile() {
     age: 25,
     heightCM: 175,
     weightKG: 75,
+    targetWeightKG: '',
     goal: 'recomposition'
   });
 
@@ -32,6 +33,7 @@ function Profile() {
               age: dbUser.age || 25,
               heightCM: dbUser.heightCM || 175,
               weightKG: dbUser.weightKG || 75,
+              targetWeightKG: dbUser.targetWeightKG || '',
               goal: dbUser.goal || 'recomposition'
           });
       }
@@ -108,6 +110,13 @@ function Profile() {
                     <input type="number" name="weightKG" value={formData.weightKG} onChange={handleChange} className="glass-input"/>
                 </div>
               </div>
+
+              {formData.goal !== 'recomposition' && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
+                      <label className="block text-xs font-bold tracking-widest uppercase mb-2 text-emerald-400">Target Weight Goal (kg)</label>
+                      <input type="number" name="targetWeightKG" value={formData.targetWeightKG || ''} onChange={handleChange} className="glass-input focus:ring-emerald-400 border-emerald-400/30" placeholder={`Expected weight for ${formData.goal === 'weightloss' ? 'fat loss' : 'muscle gain'}`}/>
+                  </motion.div>
+              )}
 
               <button type="submit" disabled={loading} className="glass-button-primary w-full mt-8 py-4 uppercase tracking-widest text-xs">
                 {loading ? 'Executing...' : 'Overwrite Targets'}
