@@ -5,8 +5,13 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 
 function Profile() {
-  const { currentUser, dbUser, refreshDbUser } = useAuth();
+  const { currentUser, dbUser, refreshDbUser, logout } = useAuth();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+      await logout();
+      navigate('/');
+  };
 
   const [formData, setFormData] = useState({
     uid: currentUser?.uid || '',
@@ -106,6 +111,14 @@ function Profile() {
 
               <button type="submit" disabled={loading} className="glass-button-primary w-full mt-8 py-4 uppercase tracking-widest text-xs">
                 {loading ? 'Executing...' : 'Overwrite Targets'}
+              </button>
+
+              <button 
+                type="button" 
+                onClick={handleLogout} 
+                className="w-full mt-4 py-4 uppercase tracking-widest text-xs font-bold border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+               >
+                Sign Out
               </button>
             </form>
           </motion.div>
