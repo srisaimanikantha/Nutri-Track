@@ -10,7 +10,8 @@ const DiaryLogSchema = new mongoose.Schema({
         quantity: { type: String },
         calories: { type: Number },
         protein: { type: Number }, // in grams
-        confidence: { type: Number }
+        confidence: { type: Number },
+        mealType: { type: String, default: 'lunch' }
     }]
 }, { timestamps: true });
 

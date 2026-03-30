@@ -11,6 +11,7 @@ function Logger() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [scannedItems, setScannedItems] = useState(null);
+  const [mealType, setMealType] = useState('lunch');
 
   const todayStr = new Date().toISOString().split('T')[0];
 
@@ -48,10 +49,12 @@ function Logger() {
     if (!scannedItems) return;
     setLoading(true);
     try {
+      const itemsWithMealType = scannedItems.food_items.map(item => ({ ...item, mealType }));
+
       await axios.post('https://nutri-track-xirg.onrender.com/api/diary/log', {
         userUid: currentUser.uid,
         dateStr: todayStr,
-        foodItems: scannedItems.food_items,
+        foodItems: itemsWithMealType,
         totalCalories: scannedItems.total_calories,
         totalProtein: scannedItems.total_protein
       });
@@ -68,6 +71,16 @@ function Logger() {
         <h2 className="text-3xl font-extrabold tracking-tight">Log Entry</h2>
         <p className="text-secondary">Capture your meal for analysis.</p>
         
+        <div className="w-full text-left py-4">
+            <label className="block text-xs font-bold tracking-widest uppercase mb-2">Meal Type Slot</label>
+            <select value={mealType} onChange={(e) => setMealType(e.target.value)} className="w-full bg-zinc-50 dark:bg-[#121214] border border-zinc-200 dark:border-zinc-800 rounded-md p-4 text-xs font-bold tracking-widest uppercase outline-none focus:border-zinc-400 transition-colors">
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snacks">Snacks</option>
+            </select>
+        </div>
+
         {!preview && (
             <label className="border hover:bg-zinc-50 dark:hover:bg-[#121214] border-zinc-200 dark:border-zinc-800 rounded-md p-20 cursor-pointer w-full transition-colors flex flex-col items-center justify-center">
                 <span className="text-sm font-bold uppercase tracking-widest text-secondary">Click to Select Image</span>

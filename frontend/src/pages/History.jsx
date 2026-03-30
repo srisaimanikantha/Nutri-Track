@@ -55,8 +55,11 @@ function History() {
                       
                       <div className="space-y-3 pt-2">
                           {log.foodItems.map((food, idx) => (
-                              <div key={idx} className="flex justify-between py-1 text-sm bg-zinc-50 dark:bg-[#121214] px-4 rounded border border-zinc-100 dark:border-zinc-800/50">
-                                  <div className="font-bold">{food.name} <span className="text-secondary ml-2 font-normal">({food.quantity})</span></div>
+                              <div key={idx} className="flex items-center justify-between py-2 text-sm bg-zinc-50 dark:bg-[#121214] px-4 rounded border border-zinc-100 dark:border-zinc-800/50">
+                                  <div className="font-bold">
+                                      <span className="text-[10px] uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mr-3 hidden sm:inline-block">[{food.mealType || 'Meal'}]</span>
+                                      {food.name} <span className="text-secondary ml-2 font-normal">({food.quantity})</span>
+                                  </div>
                                   <div className="font-medium">
                                         {food.calories} kcal <span className="text-secondary ml-2">{food.protein}g</span>
                                   </div>
