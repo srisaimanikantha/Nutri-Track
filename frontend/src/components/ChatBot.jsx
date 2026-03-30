@@ -57,7 +57,15 @@ function ChatBot() {
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               AI Nutritionist
             </h3>
-            <button onClick={() => setIsOpen(false)} className="text-secondary hover:text-red-500 transition px-2 font-bold select-none">✕</button>
+            <button 
+              onClick={() => {
+                setIsOpen(false);
+                setMessages([{ role: 'assistant', content: 'Hi! I am your AI Nutritionist. How can I help you meet your goals today?' }]);
+              }} 
+              className="text-secondary hover:text-red-500 transition px-2 font-bold select-none"
+            >
+              ✕
+            </button>
           </div>
 
           {/* Chat Area */}
