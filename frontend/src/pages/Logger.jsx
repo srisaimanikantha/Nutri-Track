@@ -82,10 +82,19 @@ function Logger() {
         </div>
 
         {!preview && (
-            <label className="border hover:bg-zinc-50 dark:hover:bg-[#121214] border-zinc-200 dark:border-zinc-800 rounded-md p-20 cursor-pointer w-full transition-colors flex flex-col items-center justify-center">
-                <span className="text-sm font-bold uppercase tracking-widest text-secondary">Click to Select Image</span>
-                <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-            </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                <label className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16">
+                    <span className="text-4xl drop-shadow-md">📸</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-md">Take Photo</span>
+                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
+                </label>
+                
+                <label className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16">
+                    <span className="text-4xl drop-shadow-md">📁</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-md">Upload Image</span>
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                </label>
+            </div>
         )}
 
         {preview && !scannedItems && (
