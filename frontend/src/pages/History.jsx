@@ -53,18 +53,31 @@ function History() {
                           </div>
                       </div>
                       
-                      <div className="space-y-3 pt-2">
-                          {log.foodItems.map((food, idx) => (
-                              <div key={idx} className="flex items-center justify-between py-2 text-sm bg-zinc-50 dark:bg-[#121214] px-4 rounded border border-zinc-100 dark:border-zinc-800/50">
-                                  <div className="font-bold">
-                                      <span className="text-[10px] uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mr-3 hidden sm:inline-block">[{food.mealType || 'Meal'}]</span>
-                                      {food.name} <span className="text-secondary ml-2 font-normal">({food.quantity})</span>
+                      <div className="space-y-6 pt-2">
+                          {['breakfast', 'lunch', 'dinner', 'snacks', 'other'].map((mealCat) => {
+                              const foodsInCat = log.foodItems.filter(f => {
+                                  const type = f.mealType ? f.mealType.toLowerCase() : 'other';
+                                  return type === mealCat || (mealCat === 'other' && !['breakfast', 'lunch', 'dinner', 'snacks'].includes(type));
+                              });
+                              
+                              if (foodsInCat.length === 0) return null;
+                              
+                              return (
+                                  <div key={mealCat} className="space-y-2">
+                                      <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 pl-2">{mealCat}</h3>
+                                      {foodsInCat.map((food, idx) => (
+                                          <div key={idx} className="flex items-center justify-between py-2 text-sm bg-zinc-50 dark:bg-[#121214] px-4 rounded border border-zinc-100 dark:border-zinc-800/50">
+                                              <div className="font-bold">
+                                                  {food.name} <span className="text-secondary ml-2 font-normal">({food.quantity})</span>
+                                              </div>
+                                              <div className="font-medium">
+                                                    {food.calories} kcal <span className="text-secondary ml-2">{food.protein}g</span>
+                                              </div>
+                                          </div>
+                                      ))}
                                   </div>
-                                  <div className="font-medium">
-                                        {food.calories} kcal <span className="text-secondary ml-2">{food.protein}g</span>
-                                  </div>
-                              </div>
-                          ))}
+                              );
+                          })}
                       </div>
                   </div>
               ))
