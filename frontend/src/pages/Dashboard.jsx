@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import ChatBot from '../components/ChatBot';
 
 function Dashboard() {
   const { currentUser, dbUser } = useAuth();
@@ -92,6 +93,7 @@ function Dashboard() {
            </p>
         </div>
       </motion.div>
+      <ChatBot />
     </div>
   );
 }

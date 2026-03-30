@@ -210,6 +210,29 @@ app.post('/api/predict', upload.single('image'), async (req, res) => {
     }
 });
 
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { message } = req.body;
+        if (!process.env.GEMINI_API_KEY) {
+            return res.json({ reply: "I am currently offline. Please configure my Gemini AI key on the server to chat!" });
+        }
+        
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: [{
+                role: 'user',
+                parts: [{ text: `You are NutriTrack AI, a strict, minimalist, and expert nutritionist. Respond efficiently and accurately to this user query: ${message}` }]
+            }]
+        });
+        
+        return res.json({ reply: response.text });
+    } catch (err) {
+        console.error("Chat Error:", err);
+        return res.status(500).json({ reply: "I'm having trouble thinking right now. Please try again later." });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Backend server running on port ${PORT}`);
 });
