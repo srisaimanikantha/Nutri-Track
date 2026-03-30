@@ -8,7 +8,8 @@ function Dashboard() {
   const { currentUser, dbUser } = useAuth();
   const [logs, setLogs] = useState([]);
   
-  const todayStr = new Date().toISOString().split('T')[0];
+  const d = new Date();
+  const todayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const todayLog = logs.find(log => log.dateStr === todayStr);
   const consumedCalories = todayLog ? todayLog.totalCalories : 0;
   const consumedProtein = todayLog ? todayLog.totalProtein : 0;

@@ -13,7 +13,8 @@ function Logger() {
   const [scannedItems, setScannedItems] = useState(null);
   const [mealType, setMealType] = useState('lunch');
 
-  const todayStr = new Date().toISOString().split('T')[0];
+  const d = new Date();
+  const todayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];

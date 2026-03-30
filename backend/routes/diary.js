@@ -51,7 +51,8 @@ router.get('/history/:uid', async (req, res) => {
 router.delete('/today/:uid', async (req, res) => {
     try {
         const uid = req.params.uid;
-        const todayStr = new Date().toISOString().split('T')[0];
+        const d = new Date();
+        const todayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
         await DiaryLog.findOneAndDelete({ userUid: uid, dateStr: todayStr });
         res.json({ message: "Today's logs reset successfully!" });
     } catch (err) {
