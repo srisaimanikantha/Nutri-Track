@@ -72,15 +72,15 @@ function ChatBot() {
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] text-sm rounded-md p-3 ${msg.role === 'user' ? 'bg-black text-white dark:bg-transparent dark:text-black rounded-tr-none' : 'bg-zinc-100 dark:bg-zinc-800 rounded-tl-none border border-zinc-200 dark:border-zinc-700'}`}>
+                <div className={`max-w-[85%] text-sm p-4 ${msg.role === 'user' ? 'bg-emerald-600/90 text-white rounded-2xl rounded-tr-sm border border-emerald-500/50 shadow-md backdrop-blur-md' : 'bg-black/60 text-white rounded-2xl rounded-tl-sm border border-white/10 shadow-md backdrop-blur-md'}`}>
                   {msg.content}
                 </div>
               </div>
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-zinc-100 dark:bg-zinc-800 text-sm rounded-md p-3 rounded-tl-none text-secondary">
-                  Typing...
+                <div className="text-sm p-4 bg-black/60 text-white/70 rounded-2xl rounded-tl-sm border border-white/10 shadow-md backdrop-blur-md">
+                  Thinking...
                 </div>
               </div>
             )}
@@ -97,7 +97,7 @@ function ChatBot() {
               className="flex-1 bg-transparent p-2 text-sm outline-none"
               disabled={loading}
             />
-            <button type="submit" disabled={loading || !input.trim()} className="px-4 py-2 font-bold uppercase tracking-widest text-[10px] bg-black text-white dark:bg-transparent dark:text-black transition-opacity disabled:opacity-50">
+            <button type="submit" disabled={loading || !input.trim()} className="px-6 py-2 font-bold uppercase tracking-widest text-[10px] bg-emerald-500 hover:bg-emerald-400 text-white rounded-md transition-all disabled:opacity-50 border border-emerald-400/30">
               Send
             </button>
           </form>
