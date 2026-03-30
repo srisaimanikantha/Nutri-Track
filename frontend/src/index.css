@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Outfit', sans-serif;
+    @apply transition-colors duration-200 ease-in-out antialiased;
+    /* Pure Black & White elegance */
+    @apply bg-white text-black dark:bg-[#09090b] dark:text-zinc-100;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .glass {
+    /* Reverting glass: pure solid monochrome elements */
+    @apply bg-white dark:bg-[#09090b] shadow-sm border border-zinc-200 dark:border-zinc-800 rounded-none sm:rounded-2xl;
+  }
+  
+  .glass-card {
+    @apply glass p-6 sm:p-8;
+  }
+  
+  .glass-input {
+    @apply w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium;
+  }
+
+  .glass-button {
+    @apply flex items-center justify-center gap-2 font-semibold bg-white dark:bg-[#09090b] hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors rounded-md border border-zinc-200 dark:border-zinc-800 active:scale-[0.98];
+  }
+  
+  .glass-button-primary {
+    @apply flex items-center justify-center gap-2 font-bold bg-black text-white dark:bg-white dark:text-black hover:opacity-80 transition-opacity rounded-md active:scale-[0.98] shadow-md;
+  }
+  
+  .text-primary {
+    @apply text-black dark:text-white;
+  }
+  .text-secondary {
+    @apply text-zinc-500 dark:text-zinc-400;
+  }
+}
