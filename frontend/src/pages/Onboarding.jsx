@@ -23,7 +23,7 @@ function Onboarding() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.put('http://localhost:5000/api/user/onboard', formData);
+      await axios.put('https://nutri-track-xirg.onrender.com/api/user/onboard', formData);
       await refreshDbUser();
       navigate('/dashboard'); 
     } catch (err) {

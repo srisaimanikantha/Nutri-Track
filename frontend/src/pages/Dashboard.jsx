@@ -25,7 +25,7 @@ function Dashboard() {
   const fetchHistory = async () => {
     if (!currentUser) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/diary/history/${currentUser.uid}`);
+      const res = await axios.get(`https://nutri-track-xirg.onrender.com/api/diary/history/${currentUser.uid}`);
       setLogs(res.data.logs);
     } catch (err) {
       console.error(err);
@@ -35,7 +35,7 @@ function Dashboard() {
   const resetToday = async () => {
       if(!window.confirm("Are you sure you want to reset all data for today?")) return;
       try {
-          await axios.delete(`http://localhost:5000/api/diary/today/${currentUser.uid}`);
+          await axios.delete(`https://nutri-track-xirg.onrender.com/api/diary/today/${currentUser.uid}`);
           fetchHistory();
       } catch(err) {
           alert('Failed to reset');

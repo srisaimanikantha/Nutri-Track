@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
             if (user) {
                 // Sync with Mongo instantly!
                 try {
-                    const res = await axios.post('http://localhost:5000/api/auth/login', {
+                    const res = await axios.post('https://nutri-track-xirg.onrender.com/api/auth/login', {
                         uid: user.uid,
                         email: user.email,
                         displayName: user.displayName,
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     const refreshDbUser = async () => {
         if (!currentUser) return;
         try {
-            const res = await axios.get(`http://localhost:5000/api/user/${currentUser.uid}`);
+            const res = await axios.get(`https://nutri-track-xirg.onrender.com/api/user/${currentUser.uid}`);
             setDbUser(res.data.user);
         } catch(err) {}
     };

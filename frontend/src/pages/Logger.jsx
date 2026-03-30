@@ -29,7 +29,7 @@ function Logger() {
     try {
       const formData = new FormData();
       formData.append('image', imageFiles);
-      const aiResponse = await axios.post('http://localhost:5000/api/predict', formData, {
+      const aiResponse = await axios.post('https://nutri-track-xirg.onrender.com/api/predict', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       const items = aiResponse.data.food_items;
@@ -48,7 +48,7 @@ function Logger() {
     if (!scannedItems) return;
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/diary/log', {
+      await axios.post('https://nutri-track-xirg.onrender.com/api/diary/log', {
         userUid: currentUser.uid,
         dateStr: todayStr,
         foodItems: scannedItems.food_items,

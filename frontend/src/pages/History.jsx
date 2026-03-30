@@ -14,7 +14,7 @@ function History() {
   const fetchHistory = async () => {
     if (!currentUser) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/diary/history/${currentUser.uid}`);
+      const res = await axios.get(`https://nutri-track-xirg.onrender.com/api/diary/history/${currentUser.uid}`);
       setLogs(res.data.logs);
     } catch (err) {
       console.error(err);
@@ -24,7 +24,7 @@ function History() {
   const deleteLog = async (id) => {
       if(!window.confirm("Delete this log completely?")) return;
       try {
-          await axios.delete(`http://localhost:5000/api/diary/log/${id}`);
+          await axios.delete(`https://nutri-track-xirg.onrender.com/api/diary/log/${id}`);
           fetchHistory();
       } catch (err) {
           alert("Could not delete log.");
