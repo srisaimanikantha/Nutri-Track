@@ -65,10 +65,10 @@ function Dashboard() {
                <span>Calories</span>
                <span>{consumedCalories} / {targetCalories}</span>
            </div>
-           <div className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-none overflow-hidden">
+           <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                <motion.div 
                    initial={{ width: 0 }} animate={{ width: `${caloriePercent}%` }}
-                   className={`h-full ${caloriePercent >= 100 ? 'bg-black dark:bg-transparent' : 'bg-black dark:bg-transparent'}`}
+                   className={`h-full bg-gradient-to-r from-red-500 to-rose-400`}
                />
            </div>
            <p className="text-xs text-secondary mt-4 font-medium uppercase tracking-widest">
@@ -82,10 +82,10 @@ function Dashboard() {
                <span>Protein</span>
                <span>{consumedProtein} / {targetProtein}g</span>
            </div>
-           <div className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-none overflow-hidden">
+           <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                <motion.div 
                    initial={{ width: 0 }} animate={{ width: `${proteinPercent}%` }}
-                   className="h-full bg-black dark:bg-transparent"
+                   className="h-full bg-gradient-to-r from-red-500 to-rose-400"
                />
            </div>
            <p className="text-xs text-secondary mt-4 font-medium uppercase tracking-widest">
