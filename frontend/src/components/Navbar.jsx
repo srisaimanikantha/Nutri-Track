@@ -19,7 +19,7 @@ function Navbar() {
       return (
           <button 
               onClick={() => navigate(to)} 
-              className={`text-sm font-semibold tracking-widest uppercase px-3 py-1.5 transition-colors ${active ? 'text-white border-b-2 border-black dark:border-white' : 'text-zinc-300 hover:text-black dark:hover:text-white border-b-2 border-transparent'}`}
+              className={`text-sm font-semibold tracking-widest uppercase px-3 py-1.5 transition-colors ${active ? 'text-zinc-900 dark:text-white border-b-2 border-zinc-900 dark:border-white' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border-b-2 border-transparent'}`}
           >
               {label}
           </button>
@@ -31,7 +31,7 @@ function Navbar() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 cursor-pointer flex items-center" onClick={() => navigate('/dashboard')}>
-            <span className="font-extrabold text-lg tracking-[0.2em] uppercase">Nutri<span className="text-zinc-400">Track</span></span>
+            <span className="font-extrabold text-lg tracking-[0.2em] uppercase text-zinc-900 dark:text-zinc-50">Nutri<span className="text-zinc-500 dark:text-zinc-400">Track</span></span>
           </div>
           
           {currentUser && (
@@ -45,7 +45,7 @@ function Navbar() {
           <div className="flex items-center gap-6">
             <button 
               onClick={toggleTheme} 
-              className="text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-black dark:hover:text-white transition-colors"
+              className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors"
             >
               {isDarkMode ? 'Light' : 'Dark'}
             </button>
@@ -57,7 +57,7 @@ function Navbar() {
                       {currentUser.photoURL && <img src={currentUser.photoURL} alt="User" />}
                   </div>
                 </button>
-                <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-widest text-zinc-300 hover:text-black dark:hover:text-white transition hidden sm:block">
+                <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white transition hidden sm:block">
                   Exit
                 </button>
               </div>
