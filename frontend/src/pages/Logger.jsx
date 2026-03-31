@@ -93,23 +93,23 @@ function Logger() {
         <div className="w-full text-left py-4">
             <label className="block text-xs font-bold tracking-widest uppercase mb-2">Meal Type Slot</label>
             <select value={mealType} onChange={(e) => setMealType(e.target.value)} className="w-full glass border border-zinc-200 dark:border-zinc-800 rounded-md p-4 text-xs font-bold tracking-widest uppercase outline-none focus:border-zinc-400 transition-colors">
-                <option value="breakfast">Breakfast</option>
-                <option value="lunch">Lunch</option>
-                <option value="dinner">Dinner</option>
-                <option value="snacks">Snacks</option>
+                <option value="breakfast" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white pt-2">Breakfast</option>
+                <option value="lunch" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white">Lunch</option>
+                <option value="dinner" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white">Dinner</option>
+                <option value="snacks" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white">Snacks</option>
             </select>
         </div>
 
         {!preview && !showCamera && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                <button onClick={() => setShowCamera(true)} className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16 w-full">
+                <button onClick={() => setShowCamera(true)} className="glass-card border-zinc-200/50 dark:border-white/20 hover:bg-zinc-200/50 dark:hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16 w-full">
                     <span className="text-4xl drop-shadow-md">📸</span>
-                    <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-md">Take Photo</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-zinc-900 dark:text-white drop-shadow-md">Take Photo</span>
                 </button>
                 
-                <label className="glass-card border-white/20 hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16 w-full">
+                <label className="glass-card border-zinc-200/50 dark:border-white/20 hover:bg-zinc-200/50 dark:hover:bg-white/10 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center space-y-4 py-16 w-full">
                     <span className="text-4xl drop-shadow-md">📁</span>
-                    <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-md">Upload Image</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-zinc-900 dark:text-white drop-shadow-md">Upload Image</span>
                     <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
                 </label>
             </div>
