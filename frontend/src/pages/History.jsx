@@ -3,6 +3,8 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 function History() {
   const { currentUser } = useAuth();
   const [logs, setLogs] = useState([]);
@@ -12,9 +14,9 @@ function History() {
   }, [currentUser]);
 
   const fetchHistory = async () => {
-    if (!currentUser) return;
+    if (!currentUser?._id) return;
     try {
-      const res = await axios.get(`https://nutri-track-xirg.onrender.com/api/diary/history/${currentUser.uid}`);
+      const res = await axios.get(`${API_BASE_URL}/diary/history/${currentUser._id}`);
       setLogs(res.data.logs);
     } catch (err) {
       console.error(err);
@@ -24,7 +26,7 @@ function History() {
   const deleteLog = async (id) => {
       if(!window.confirm("Delete this log completely?")) return;
       try {
-          await axios.delete(`https://nutri-track-xirg.onrender.com/api/diary/log/${id}`);
+          await axios.delete(`${API_BASE_URL}/diary/log/${id}`);
           fetchHistory();
       } catch (err) {
           alert("Could not delete log.");

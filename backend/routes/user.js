@@ -36,13 +36,13 @@ function calculateMetrics(age, gender, heightCM, weightKG, goal) {
 // Handles the onboarding setup wizard metrics setup
 router.put('/onboard', async (req, res) => {
     try {
-        const { uid, gender, age, heightCM, weightKG, targetWeightKG, goal } = req.body;
-        if (!uid) return res.status(400).json({ error: 'Missing UID' });
+        const { userId, gender, age, heightCM, weightKG, targetWeightKG, goal } = req.body;
+        if (!userId) return res.status(400).json({ error: 'Missing UserId' });
 
         const metrics = calculateMetrics(age, gender, heightCM, weightKG, goal);
         
-        const updatedUser = await User.findOneAndUpdate(
-            { uid },
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
             {
                 gender,
                 age,
@@ -58,6 +58,7 @@ router.put('/onboard', async (req, res) => {
             { new: true }
         );
 
+        if (!updatedUser) return res.status(404).json({ error: 'User not found' });
         res.json({ user: updatedUser });
     } catch (err) {
         console.error('Onboard Error:', err);
@@ -65,10 +66,10 @@ router.put('/onboard', async (req, res) => {
     }
 });
 
-// GET /api/user/:uid
-router.get('/:uid', async (req, res) => {
+// GET /api/user/:userId
+router.get('/:userId', async (req, res) => {
     try {
-        const user = await User.findOne({ uid: req.params.uid });
+        const user = await User.findById(req.params.userId);
         if (!user) return res.status(404).json({ error: 'User not found' });
         res.json({ user });
     } catch (err) {

@@ -5,6 +5,8 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 function Logger() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ function Logger() {
     try {
       const formData = new FormData();
       formData.append('image', imageFiles);
-      const aiResponse = await axios.post('https://nutri-track-xirg.onrender.com/api/predict', formData, {
+      const aiResponse = await axios.post(`${API_BASE_URL}/predict`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       const items = aiResponse.data.food_items;
@@ -65,13 +67,13 @@ function Logger() {
   };
 
   const logMeal = async () => {
-    if (!scannedItems) return;
+    if (!scannedItems || !currentUser?._id) return;
     setLoading(true);
     try {
       const itemsWithMealType = scannedItems.food_items.map(item => ({ ...item, mealType }));
 
-      await axios.post('https://nutri-track-xirg.onrender.com/api/diary/log', {
-        userUid: currentUser.uid,
+      await axios.post(`${API_BASE_URL}/diary/log`, {
+        userId: currentUser._id,
         dateStr: todayStr,
         foodItems: itemsWithMealType,
         totalCalories: scannedItems.total_calories,

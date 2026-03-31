@@ -4,6 +4,8 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import ChatBot from '../components/ChatBot';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 function Dashboard() {
   const { currentUser, dbUser } = useAuth();
   const [logs, setLogs] = useState([]);
@@ -25,9 +27,9 @@ function Dashboard() {
   }, [currentUser]);
 
   const fetchHistory = async () => {
-    if (!currentUser) return;
+    if (!currentUser?._id) return;
     try {
-      const res = await axios.get(`https://nutri-track-xirg.onrender.com/api/diary/history/${currentUser.uid}`);
+      const res = await axios.get(`${API_BASE_URL}/diary/history/${currentUser._id}`);
       setLogs(res.data.logs);
     } catch (err) {
       console.error(err);
@@ -37,7 +39,7 @@ function Dashboard() {
   const resetToday = async () => {
       if(!window.confirm("Are you sure you want to reset all data for today?")) return;
       try {
-          await axios.delete(`https://nutri-track-xirg.onrender.com/api/diary/today/${currentUser.uid}`);
+          await axios.delete(`${API_BASE_URL}/diary/today/${currentUser._id}`);
           fetchHistory();
       } catch(err) {
           alert('Failed to reset');

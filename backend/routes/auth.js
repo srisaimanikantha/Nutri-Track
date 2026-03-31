@@ -1,37 +1,65 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key_here';
+
+// POST /api/auth/signup
+router.post('/signup', async (req, res) => {
+    try {
+        const { email, password, displayName } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
+        }
+
+        let user = await User.findOne({ email });
+        if (user) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user = new User({
+            email,
+            password: hashedPassword,
+            displayName: displayName || '',
+            hasCompletedOnboarding: false
+        });
+
+        await user.save();
+
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
+        res.status(201).json({ user, token, isNewUser: true });
+    } catch (err) {
+        console.error('Signup Error:', err);
+        res.status(500).json({ error: 'Server error during signup' });
+    }
+});
+
 // POST /api/auth/login
-// Sync Google Firebase User with MongoDB. If they don't exist, create them.
 router.post('/login', async (req, res) => {
     try {
-        const { uid, email, displayName, photoURL } = req.body;
-        if (!uid || !email) {
-            return res.status(400).json({ error: 'Missing uid or email' });
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
         }
 
-        let user = await User.findOne({ uid });
-        
+        const user = await User.findOne({ email });
         if (!user) {
-            // New user registration
-            user = new User({
-                uid,
-                email,
-                displayName: displayName || '',
-                photoURL: photoURL || '',
-                hasCompletedOnboarding: false
-            });
-            await user.save();
-            return res.status(201).json({ user, isNewUser: true });
+            return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Returning user
-        return res.status(200).json({ user, isNewUser: false });
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
 
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
+        res.status(200).json({ user, token, isNewUser: false });
     } catch (err) {
         console.error('Login Error:', err);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Server error during login' });
     }
 });
 

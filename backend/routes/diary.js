@@ -5,12 +5,12 @@ const DiaryLog = require('../models/DiaryLog');
 // POST /api/diary/log
 router.post('/log', async (req, res) => {
     try {
-        const { userUid, dateStr, foodItems, totalCalories, totalProtein } = req.body;
-        if (!userUid || !dateStr || !foodItems || !foodItems.length) {
+        const { userId, dateStr, foodItems, totalCalories, totalProtein } = req.body;
+        if (!userId || !dateStr || !foodItems || !foodItems.length) {
             return res.status(400).json({ error: 'Missing required tracking fields' });
         }
 
-        let log = await DiaryLog.findOne({ userUid: userUid, dateStr: dateStr });
+        let log = await DiaryLog.findOne({ userId: userId, dateStr: dateStr });
 
         if (log) {
             log.foodItems.push(...foodItems);
@@ -19,7 +19,7 @@ router.post('/log', async (req, res) => {
             await log.save();
         } else {
             log = new DiaryLog({
-                userUid,
+                userId,
                 dateStr,
                 foodItems,
                 totalCalories: totalCalories || 0,
@@ -35,25 +35,25 @@ router.post('/log', async (req, res) => {
     }
 });
 
-// GET /api/diary/history/:uid
-router.get('/history/:uid', async (req, res) => {
+// GET /api/diary/history/:userId
+router.get('/history/:userId', async (req, res) => {
     try {
-        const uid = req.params.uid;
-        const logs = await DiaryLog.find({ userUid: uid }).sort({ dateStr: -1 });
+        const userId = req.params.userId;
+        const logs = await DiaryLog.find({ userId }).sort({ dateStr: -1 });
         res.json({ logs });
     } catch (err) {
         res.status(500).json({ error: 'Error fetching diary history' });
     }
 });
 
-// DELETE /api/diary/today/:uid
+// DELETE /api/diary/today/:userId
 // Completely wipes the progress for the current day
-router.delete('/today/:uid', async (req, res) => {
+router.delete('/today/:userId', async (req, res) => {
     try {
-        const uid = req.params.uid;
+        const userId = req.params.userId;
         const d = new Date();
         const todayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-        await DiaryLog.findOneAndDelete({ userUid: uid, dateStr: todayStr });
+        await DiaryLog.findOneAndDelete({ userId, dateStr: todayStr });
         res.json({ message: "Today's logs reset successfully!" });
     } catch (err) {
         res.status(500).json({ error: "Failed to reset today's logs" });

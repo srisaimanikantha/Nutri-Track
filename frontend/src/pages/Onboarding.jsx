@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 function Onboarding() {
   const { currentUser, refreshDbUser } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    uid: currentUser?.uid || '',
+    userId: currentUser?._id || '',
     gender: 'male',
     age: 25,
     heightCM: 175,
@@ -23,7 +25,7 @@ function Onboarding() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.put('https://nutri-track-xirg.onrender.com/api/user/onboard', formData);
+      await axios.put(`${API_BASE_URL}/user/onboard`, formData);
       await refreshDbUser();
       navigate('/dashboard'); 
     } catch (err) {

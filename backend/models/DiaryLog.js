@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const DiaryLogSchema = new mongoose.Schema({
-    userUid: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     dateStr: { type: String, required: true },
     totalCalories: { type: Number, required: true, default: 0 },
     totalProtein: { type: Number, required: true, default: 0 },
