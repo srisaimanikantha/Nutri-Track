@@ -22,7 +22,8 @@ function Profile() {
     heightCM: 175,
     weightKG: 75,
     targetWeightKG: '',
-    goal: 'recomposition'
+    goal: 'recomposition',
+    activityLevel: 'sedentary'
   });
 
   const [loading, setLoading] = useState(false);
@@ -36,7 +37,8 @@ function Profile() {
               heightCM: dbUser.heightCM || 175,
               weightKG: dbUser.weightKG || 75,
               targetWeightKG: dbUser.targetWeightKG || '',
-              goal: dbUser.goal || 'recomposition'
+              goal: dbUser.goal || 'recomposition',
+              activityLevel: dbUser.activityLevel || 'sedentary'
           });
       }
   }, [dbUser]);
@@ -88,12 +90,24 @@ function Profile() {
                         <option value="female">Female</option>
                     </select>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
                 <div>
                     <label className="block text-xs font-bold tracking-widest uppercase mb-2">Algorithm Goal</label>
                     <select name="goal" value={formData.goal} onChange={handleChange} className="glass-input uppercase text-xs">
                         <option value="recomposition">Maintain Weight</option>
                         <option value="weightloss">Fat Loss</option>
                         <option value="bulking">Muscle Building</option>
+                    </select>
+                </div>
+                <div>
+                    <label className="block text-xs font-bold tracking-widest uppercase mb-2">Weekly Activity</label>
+                    <select name="activityLevel" value={formData.activityLevel} onChange={handleChange} className="glass-input uppercase text-xs">
+                        <option value="sedentary">Sedentary (No Exercise)</option>
+                        <option value="light">Lightly (1–3 days/week)</option>
+                        <option value="moderate">Moderate (3–5 days/week)</option>
+                        <option value="very">Very Active (6–7 days/week)</option>
+                        <option value="super">Super Active (Intense)</option>
                     </select>
                 </div>
               </div>
@@ -111,6 +125,15 @@ function Profile() {
                     <label className="block text-xs font-bold tracking-widest uppercase mb-2">Weight (kg)</label>
                     <input type="number" name="weightKG" value={formData.weightKG} onChange={handleChange} className="glass-input"/>
                 </div>
+              </div>
+
+              <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-100 dark:border-zinc-800">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Target Advice</p>
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  {formData.goal === 'weightloss' && "To achieve fat loss, we've set a 500-calorie deficit. Focus on high protein to preserve muscle mass while losing weight."}
+                  {formData.goal === 'bulking' && "For muscle gain, a 400-calorie surplus is targeted. Ensure you hit your protein goals to support hypertrophy."}
+                  {formData.goal === 'recomposition' && "Maintenance mode focuses on body recomposition. Keep your intake steady while training to balance fat loss and muscle gain."}
+                </p>
               </div>
 
               {formData.goal !== 'recomposition' && (

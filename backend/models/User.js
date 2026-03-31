@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
     weightKG: { type: Number, default: 70 },
     targetWeightKG: { type: Number },
     goal: { type: String, enum: ['weightloss', 'recomposition', 'bulking'], default: 'recomposition' },
+    activityLevel: { type: String, enum: ['sedentary', 'light', 'moderate', 'very', 'super'], default: 'sedentary' },
     
     // Automatically Calculated from BMI/Goal logic during Onboarding
     bmi: { type: Number },
