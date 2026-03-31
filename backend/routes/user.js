@@ -18,10 +18,10 @@ function calculateMetrics(age, gender, heightCM, weightKG, goal) {
     let targetCalories = tdee;
     let targetProtein = weightKG * 1.8; // default 1.8g per kg
 
-    if (goal === 'weightloss') {
+    if (goal === 'weightloss' || goal === 'fatloss') {
         targetCalories = tdee - 500; // 500 calorie deficit
         targetProtein = weightKG * 2.0; // Higher protein to preserve muscle
-    } else if (goal === 'bulking') {
+    } else if (goal === 'bulking' || goal === 'musclebuilding') {
         targetCalories = tdee + 500; // 500 calorie surplus
         targetProtein = weightKG * 2.2; // Maximum protein for bulking
     } else {
