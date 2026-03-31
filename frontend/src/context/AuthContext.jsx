@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth, googleProvider } from '../firebase';
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signInWithRedirect, signOut, onAuthStateChanged } from 'firebase/auth';
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const loginWithGoogle = async () => {
-        return signInWithPopup(auth, googleProvider);
+        return signInWithRedirect(auth, googleProvider);
     };
 
     const logout = () => {
