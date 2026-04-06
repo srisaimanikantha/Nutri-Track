@@ -39,7 +39,13 @@ export const AuthProvider = ({ children }) => {
             return { success: true };
         } catch (err) {
             console.error("Login failed", err);
-            return { success: false, error: err.response?.data?.error || 'Login failed' };
+            let errorMsg = 'Login failed';
+            if (err.response) {
+                errorMsg = err.response.data?.error || 'Login failed';
+            } else if (err.request) {
+                errorMsg = 'Server unreachable. Is the backend running?';
+            }
+            return { success: false, error: errorMsg };
         }
     };
 
@@ -55,7 +61,13 @@ export const AuthProvider = ({ children }) => {
             return { success: true };
         } catch (err) {
             console.error("Signup failed", err);
-            return { success: false, error: err.response?.data?.error || 'Signup failed' };
+            let errorMsg = 'Signup failed';
+            if (err.response) {
+                errorMsg = err.response.data?.error || 'Signup failed';
+            } else if (err.request) {
+                errorMsg = 'Server unreachable. Is the backend running?';
+            }
+            return { success: false, error: errorMsg };
         }
     };
 
